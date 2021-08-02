@@ -1,0 +1,59 @@
+@import "colors";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+
+  &__sidebar {
+    color: white;
+    width: 20%;
+    background: $mediumPurple;
+    padding: 1em;
+  }
+
+  &__maze-container {
+    width: 80%;
+    background: $darkPurple;
+  }
+
+  &__title {
+    color: $pink;
+    font-weight: 900;
+  }
+
+  &__parameters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__buttons {
+    margin: 20px 0;
+    &--play {
+      margin-right: 10px;
+    }
+    > button {
+      cursor: pointer;
+      padding: 10px;
+      width: 80px;
+    }
+  }
+
+  &__instructions {
+    &--keyboard {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+  }
+}
