@@ -1,0 +1,43 @@
+@import "../colors";
+
+.maze {
+  background: $lightPurple;
+  border-right: dashed 3px $mediumPurple;
+  border-bottom: dashed 3px $mediumPurple;
+
+  width: fit-content;
+  .cell {
+    width: 30px;
+    height: 30px;
+
+    &.west, &.east {
+      width: 27px;
+    }
+
+    &.north, &.south {
+      height: 27px;
+    }
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .west {
+    border-left: dashed 3px $mediumPurple;
+  }
+
+  .north {
+    border-top: dashed 3px $mediumPurple;
+  }
+
+  .east {
+    border-right: dashed 3px $mediumPurple;
+  }
+
+  .south {
+    border-bottom: dashed 3px $mediumPurple;
+  }
+}
+
+
