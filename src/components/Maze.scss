@@ -2,20 +2,17 @@
 
 .maze {
   background: $lightPurple;
-  border-right: dashed 3px $mediumPurple;
-  border-bottom: dashed 3px $mediumPurple;
-
   width: fit-content;
   .cell {
     width: 30px;
     height: 30px;
 
-    &.west, &.east {
-      width: 27px;
+    &.west {
+      width: 26px;
     }
 
-    &.north, &.south {
-      height: 27px;
+    &.north {
+      height: 26px;
     }
   }
 
@@ -24,19 +21,19 @@
   }
 
   .west {
-    border-left: dashed 3px $mediumPurple;
+    border-left: solid 4px $mediumPurple;
   }
 
   .north {
-    border-top: dashed 3px $mediumPurple;
+    border-top: solid 4px $mediumPurple;
   }
 
   .east {
-    border-right: dashed 3px $mediumPurple;
+    border-right: solid 4px $mediumPurple;
   }
 
   .south {
-    border-bottom: dashed 3px $mediumPurple;
+    border-bottom: solid 4px $mediumPurple;
   }
 }
 

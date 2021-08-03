@@ -33,12 +33,12 @@ const createRows = (maze) => {
       // element["isExit"] = id === dataArr["end-point"];
       // element["isExitPath"] = exitPath.includes(id);
       // element["height"] = height;
-      // if (i === height - 1) {
-      //   cell["walls"].push("south");
-      // }
-      // if (j === width - 1) {
-      //   cell["walls"].push("east");
-      // }
+      if (i === height - 1) {
+        cell["walls"].push("south");
+      }
+      if (j === width - 1) {
+        cell["walls"].push("east");
+      }
       row.push(cell);
       id++;
     }

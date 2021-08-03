@@ -56,4 +56,10 @@ body {
       gap: 10px;
     }
   }
+
+  &__maze-container {
+    display: inherit;
+    align-items: center;
+    justify-content: center;
+  }
 }
