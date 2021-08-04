@@ -1,8 +1,8 @@
-import './Maze.scss';
+import "./Maze.scss";
 
 const createRows = (maze) => {
   let id = 0;
-  const [ width, height ] = maze.size;
+  const [width, height] = maze.size;
   const rows = [];
 
   for (let i = 0; i < height; i++) {
@@ -13,8 +13,8 @@ const createRows = (maze) => {
         walls: maze.data[id],
         isPony: id === maze.pony[0],
         isDomokun: id === maze.domokun[0],
-        isExit: id === maze["end-point"][0]
-      }
+        isExit: id === maze["end-point"][0],
+      };
       // element["key"] = id;
       // element["walls"] = data[id];
       // element["isPony"] = id === pony;
@@ -40,25 +40,25 @@ const Cell = ({ cell }) => {
   const { walls, isPony, isDomokun, isExit } = cell;
   return (
     <div className={`cell ${walls.join(" ")}`}>
-      { isPony && <span className="pony">P</span>}
-      { isDomokun && <span>D</span>}
-      { isExit && <span>E</span>}
+      {isPony && <span className="pony">P</span>}
+      {isDomokun && <span>D</span>}
+      {isExit && <span>E</span>}
     </div>
   );
-}
+};
 
-const Row = ({ row }) => (
-  row.map((cell, i) =>
-    <Cell key={i} cell={cell} />
-  )
-)
+const Row = ({ row }) => row.map((cell, i) => <Cell key={i} cell={cell} />);
 
 export const Maze = ({ data }) => {
   const rows = createRows(data);
 
   return (
-    <div className="maze" onKeyPress={ev => console.log(ev)}>
-      { rows.map((row, i) => <div className="row"><Row key={i} row={row} /></div>)}
+    <div className="maze" onKeyPress={(ev) => console.log(ev)}>
+      {rows.map((row, i) => (
+        <div className="row">
+          <Row key={i} row={row} />
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};

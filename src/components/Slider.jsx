@@ -1,4 +1,4 @@
-import './Slider.scss';
+import "./Slider.scss";
 
 export const Slider = ({ id, name, min, max, value, onChange }) => {
   const setValue = () => {
@@ -12,12 +12,19 @@ export const Slider = ({ id, name, min, max, value, onChange }) => {
   return (
     <div className="slider">
       <label htmlFor={id}>{name}</label>
-      <input type="range" id={id} name={name} min={min} max={max} defaultValue={value}
-             onChange={e => {
-               setValue();
-               return onChange(e.target.value);
-             }} />
+      <input
+        type="range"
+        id={id}
+        name={name}
+        min={min}
+        max={max}
+        defaultValue={value}
+        onChange={(e) => {
+          setValue();
+          return onChange(e.target.value);
+        }}
+      />
       <label>{value}</label>
     </div>
-  )
-}
+  );
+};
