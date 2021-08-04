@@ -30,12 +30,25 @@
       }
     }
 
+    .pony,
+    .domokun,
+    .door {
+      width: 2vw;
+      height: 2vw;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
     .pony {
-      //width: 47px;
-      //height: 48px;
-      //background-image : url("../assets/ponySprites.png");
-      ///animation: moveUp 1s steps(3) infinite;
-      //background-position-x: 0;
+      background-image: url("../assets/pony.png");
+    }
+
+    .domokun {
+      background-image: url("../assets/domokun.png");
+    }
+
+    .door {
+      background-image: url("../assets/door.png");
     }
   }
 

@@ -40,9 +40,9 @@ const Cell = ({ cell }) => {
   const { walls, isPony, isDomokun, isExit } = cell;
   return (
     <div className={`cell ${walls.join(" ")}`}>
-      {isPony && <span className="pony">P</span>}
-      {isDomokun && <span>D</span>}
-      {isExit && <span>E</span>}
+      {isPony && <span className="pony" />}
+      {isDomokun && <span className="domokun" />}
+      {isExit && <span className="door" />}
     </div>
   );
 };

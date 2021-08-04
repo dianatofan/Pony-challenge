@@ -3,6 +3,8 @@ import "./App.scss";
 import { Slider } from "./components/Slider";
 import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
+import { connect } from "react-redux";
+import { setGameStarted } from "./redux/App/app.actions";
 
 const App = () => {
   const [width, setWidth] = useState(15);
@@ -30,6 +32,7 @@ const App = () => {
     );
     const content = await rawResponse.json();
     setMazeId(content.maze_id);
+    setGameStarted(true);
   };
 
   useEffect(() => {
@@ -82,7 +85,12 @@ const App = () => {
           <button className="app__buttons--play" onClick={createMaze}>
             Play →
           </button>
-          <button className="app__buttons--reset">Reset ↩︎</button>
+          <button
+            className="app__buttons--reset"
+            onClick={() => setGameStarted(false)}
+          >
+            Reset ↩︎
+          </button>
         </section>
         <section className="app__instructions">
           <p>Press on 'Play' to create the maze.</p>
@@ -99,4 +107,16 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isGameStarted: state.app.isGameStarted,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setGameStarted: (val) => dispatch(setGameStarted(val)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
