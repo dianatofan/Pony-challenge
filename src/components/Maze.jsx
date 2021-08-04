@@ -1,20 +1,8 @@
 import './Maze.scss';
-import { useEffect } from "react";
 
 const createRows = (maze) => {
   let id = 0;
-
-  // let step = 0;
   const [ width, height ] = maze.size;
-  // const rows = Array.from(Array(width), () => []);
-  //
-  // for (let i = 0; i < width; i++) {
-  //   for (let j = 0; j < height; j++) {
-  //     console.log(step);
-  //     rows[i].push(maze.data[j + step]);
-  //   }
-  // }
-
   const rows = [];
 
   for (let i = 0; i < height; i++) {
@@ -65,7 +53,7 @@ const Row = ({ row }) => (
   )
 )
 
-export const Maze = ({ data, width, height }) => {
+export const Maze = ({ data }) => {
   const rows = createRows(data);
 
   return (

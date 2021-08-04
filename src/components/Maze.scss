@@ -4,18 +4,30 @@
   background: $lightPurple;
   width: fit-content;
   .cell {
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 2vw;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &.west {
-      width: 26px;
+      width: calc(2vw - 4px);
     }
 
     &.north {
-      height: 26px;
+      height: calc(2vw - 4px);
+    }
+
+    @media only screen and (max-width: 1000px) {
+      width: calc(1em + 2vw);
+      height: calc(1em + 2vw);
+      &.west {
+        width: calc(1em + 2vw - 4px);
+      }
+
+      &.north {
+        height: calc(1em + 2vw - 4px);
+      }
     }
 
     .pony {
@@ -28,23 +40,45 @@
   }
 
   @keyframes moveLeft {
-    from{background-position-x: 0; background-position-y: 144px;}
-    to{background-position-x: 141px; background-position-y: 144px;}
+    from {
+      background-position-x: 0;
+      background-position-y: 144px;
+    }
+    to {
+      background-position-x: 141px;
+      background-position-y: 144px;
+    }
   }
 
   @keyframes moveRight {
-    from{background-position-x: 0; background-position-y: 96px;}
-    to{background-position-x: 141px; background-position-y: 96px;}
+    from {
+      background-position-x: 0;
+      background-position-y: 96px;
+    }
+    to {
+      background-position-x: 141px;
+      background-position-y: 96px;
+    }
   }
 
   @keyframes moveDown {
-    from{background-position-x: 0; }
-    to{background-position-x: 141px;}
+    from {
+      background-position-x: 0;
+    }
+    to {
+      background-position-x: 141px;
+    }
   }
 
   @keyframes moveUp {
-    from{background-position-x: 0; background-position-y: 48px; }
-    to{background-position-x: 141px; background-position-y: 48px;}
+    from {
+      background-position-x: 0;
+      background-position-y: 48px;
+    }
+    to {
+      background-position-x: 141px;
+      background-position-y: 48px;
+    }
   }
 
   .row {
@@ -67,5 +101,3 @@
     border-bottom: solid 4px $mediumPurple;
   }
 }
-
-

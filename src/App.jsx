@@ -32,7 +32,7 @@ const App = () => {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      const mazeResponse = await fetch(`https://ponychallenge.trustpilot.com/pony-challenge/maze/${mazeId}`)
+      await fetch(`https://ponychallenge.trustpilot.com/pony-challenge/maze/${mazeId}`)
         .then(response => response.json())
         .then(json => {
           setMaze(json);
