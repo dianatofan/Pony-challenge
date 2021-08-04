@@ -45,7 +45,7 @@ const App = () => {
     <div className="app">
       <aside className="app__sidebar">
         <h1 className="app__title">Save the pony 🦄 </h1>
-        <p>Twilight Sparkle is in danger. Rescue her from the big bad Domokun!</p>
+        <p className="app__description">Twilight Sparkle is in danger. Rescue her from the big bad Domokun!</p>
         <section className="app__parameters">
           <Slider id="width" name="width" min="15" max="25" value={width} onChange={setWidth} />
           <Slider id="height" name="height" min="15" max="25" value={height} onChange={setHeight} />

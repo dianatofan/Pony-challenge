@@ -6,6 +6,9 @@
   .cell {
     width: 30px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &.west {
       width: 26px;
@@ -14,6 +17,34 @@
     &.north {
       height: 26px;
     }
+
+    .pony {
+      //width: 47px;
+      //height: 48px;
+      //background-image : url("../assets/ponySprites.png");
+      ///animation: moveUp 1s steps(3) infinite;
+      //background-position-x: 0;
+    }
+  }
+
+  @keyframes moveLeft {
+    from{background-position-x: 0; background-position-y: 144px;}
+    to{background-position-x: 141px; background-position-y: 144px;}
+  }
+
+  @keyframes moveRight {
+    from{background-position-x: 0; background-position-y: 96px;}
+    to{background-position-x: 141px; background-position-y: 96px;}
+  }
+
+  @keyframes moveDown {
+    from{background-position-x: 0; }
+    to{background-position-x: 141px;}
+  }
+
+  @keyframes moveUp {
+    from{background-position-x: 0; background-position-y: 48px; }
+    to{background-position-x: 141px; background-position-y: 48px;}
   }
 
   .row {
