@@ -1,5 +1,9 @@
-import { SET_MAZE_ID } from "./maze.types";
-import { SET_MAZE } from "./maze.types";
+import {
+  SET_MAZE_ID,
+  SET_MAZE_SUCCESS,
+  SET_MAZE,
+  SET_MAZE_ASYNC,
+} from "./maze.types";
 
 export const setMazeId = (mazeId) => {
   return {
@@ -15,6 +19,33 @@ export const setMaze = (maze) => {
     type: SET_MAZE,
     payload: {
       maze,
+    },
+  };
+};
+
+export const setMazeAsync = (maze) => {
+  return {
+    type: SET_MAZE_ASYNC,
+    payload: {
+      maze,
+    },
+  };
+};
+
+export const setMazeSuccess = (setMazeSuccess) => {
+  return {
+    type: SET_MAZE_SUCCESS,
+    payload: {
+      setMazeSuccess,
+    },
+  };
+};
+
+export const setMazeFailure = (setMazeSuccess) => {
+  return {
+    type: SET_MAZE,
+    payload: {
+      setMazeSuccess,
     },
   };
 };

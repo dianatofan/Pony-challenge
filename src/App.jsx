@@ -5,7 +5,8 @@ import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
 import { setGameStarted } from "./redux/App/app.actions";
-import { createMaze, getMaze } from "./utils/api";
+import { createMaze, getMaze, makeNextMove } from "./utils/api";
+import { useKeypress } from "./hooks/useKeypress";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
@@ -16,6 +17,11 @@ const App = (props) => {
   useEffect(() => {
     return getMaze(mazeId);
   }, [mazeId]);
+
+  useKeypress("ArrowLeft", () => {
+    console.log("you pressed left!");
+    makeNextMove(mazeId, "west");
+  });
 
   return (
     <div className="app">
