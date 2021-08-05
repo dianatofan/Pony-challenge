@@ -55,7 +55,7 @@ export const Maze = ({ data }) => {
   return (
     <div className="maze" onKeyPress={(ev) => console.log(ev)}>
       {rows.map((row, i) => (
-        <div className="row">
+        <div className="row" key={i}>
           <Row key={i} row={row} />
         </div>
       ))}

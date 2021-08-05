@@ -5,47 +5,16 @@ import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
 import { setGameStarted } from "./redux/App/app.actions";
+import { createMaze, getMaze } from "./utils/api";
 
-const App = () => {
+const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
-  const [mazeId, setMazeId] = useState(null);
-  const [maze, setMaze] = useState(null);
-
-  const createMaze = async () => {
-    const rawResponse = await fetch(
-      "https://ponychallenge.trustpilot.com/pony-challenge/maze",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          "maze-width": parseInt(width),
-          "maze-height": parseInt(height),
-          "maze-player-name": "Pinkie Pie",
-          difficulty: parseInt(difficulty),
-        }),
-      }
-    );
-    const content = await rawResponse.json();
-    setMazeId(content.maze_id);
-    setGameStarted(true);
-  };
+  const { setGameStarted, isGameStarted, maze, mazeId } = props;
 
   useEffect(() => {
-    async function fetchMyAPI() {
-      await fetch(
-        `https://ponychallenge.trustpilot.com/pony-challenge/maze/${mazeId}`
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          setMaze(json);
-        });
-    }
-    return fetchMyAPI();
+    return getMaze(mazeId);
   }, [mazeId]);
 
   return (
@@ -82,26 +51,32 @@ const App = () => {
           />
         </section>
         <section className="app__buttons">
-          <button className="app__buttons--play" onClick={createMaze}>
-            Play →
-          </button>
           <button
-            className="app__buttons--reset"
-            onClick={() => setGameStarted(false)}
+            className="app__buttons--play"
+            onClick={
+              isGameStarted
+                ? () => setGameStarted(false)
+                : () => createMaze(width, height, difficulty)
+            }
           >
-            Reset ↩︎
+            {isGameStarted ? "Reset →" : "Play ↩︎"}
           </button>
         </section>
-        <section className="app__instructions">
-          <p>Press on 'Play' to create the maze.</p>
-          <p className="app__instructions--keyboard">
+        {isGameStarted && (
+          <p className="app__keyboard-controls">
             Use <img src={keyboard} width={30} height={30} alt="arrow keys" />{" "}
             to move the pony.
           </p>
-        </section>
+        )}
       </aside>
       <div className="app__maze-container">
-        {maze && <Maze data={maze} width={width} height={height} />}
+        {isGameStarted ? (
+          maze && <Maze data={maze} width={width} height={height} />
+        ) : (
+          <p className="app__instructions">
+            Press on 'Play' to create the maze.
+          </p>
+        )}
       </div>
     </div>
   );
@@ -110,6 +85,8 @@ const App = () => {
 const mapStateToProps = (state) => {
   return {
     isGameStarted: state.app.isGameStarted,
+    maze: state.maze.maze,
+    mazeId: state.maze.mazeId,
   };
 };
 
