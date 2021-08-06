@@ -3,6 +3,7 @@ import {
   setMazeAsync,
   setMazeSuccess,
   setMazeFailure,
+  createMaze,
 } from "../redux/Maze/maze.actions";
 import { getMaze, fetchCreate } from "../utils/api";
 
@@ -22,15 +23,17 @@ function* watchGetMazeSaga() {
   yield takeEvery("SET_MAZE", getMazeSaga);
 }
 
-function* createMazeSaga(action) {
+function* createMazeSaga(payload) {
   try {
-    const mazeId = yield call(fetchCreate, action.payload.mazeId);
-    yield put({ type: "MAZE_ID_SUCCEEDED", mazeId: mazeId });
+    const response = yield call(fetchCreate, payload.data);
+    const content = yield response.json();
+    yield put(createMaze.success(content));
   } catch (e) {
-    yield put({ type: "MAZE_ID_FAILED", message: e.message });
+    console.log(e.message);
+    yield put(createMaze.failure(e.message));
   }
 }
 
 export default function* watchCreateMazeSaga() {
-  yield takeEvery("SET_MAZE_ID", createMazeSaga);
+  yield takeEvery(createMaze.REQUEST, createMazeSaga);
 }

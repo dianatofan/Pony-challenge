@@ -23,7 +23,7 @@ export const createMaze = async (width, height, difficulty) => {
   store.dispatch(setGameStarted(true));
 };
 
-export const fetchCreate = (width, height, difficulty) =>
+export const fetchCreate = ({ width, height, difficulty }) =>
   fetch(`${BASE_URL}`, {
     method: "POST",
     headers: {

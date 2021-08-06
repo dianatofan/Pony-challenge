@@ -5,17 +5,18 @@ import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
 import { setGameStarted } from "./redux/App/app.actions";
-import { createMaze, getMaze, makeNextMove } from "./utils/api";
+import { createMaze } from "./redux/Maze/maze.actions";
+import { getMaze, makeNextMove } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
-  const { setGameStarted, isGameStarted, maze, mazeId } = props;
+  const { setGameStarted, isGameStarted, maze, mazeId, createMaze } = props;
 
   useEffect(() => {
-    return getMaze(mazeId);
+    // return getMaze(mazeId);
   }, [mazeId]);
 
   useKeypress("ArrowLeft", () => {
@@ -62,7 +63,7 @@ const App = (props) => {
             onClick={
               isGameStarted
                 ? () => setGameStarted(false)
-                : () => createMaze(width, height, difficulty)
+                : () => createMaze({ width, height, difficulty })
             }
           >
             {isGameStarted ? "Reset →" : "Play ↩︎"}
@@ -99,6 +100,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setGameStarted: (val) => dispatch(setGameStarted(val)),
+    createMaze: (val) => dispatch(createMaze.request(val)),
   };
 };
 
