@@ -5,6 +5,7 @@ import {
   GET_MAZE_REQUEST,
   GET_MAZE_SUCCESS,
   GET_MAZE_FAILURE,
+  RESET_MAZE,
 } from "./maze.types";
 
 export const createMazeRequest = (data) => ({
@@ -35,4 +36,8 @@ export const getMazeSuccess = (data) => ({
 export const getMazeFailure = (data) => ({
   type: GET_MAZE_FAILURE,
   data,
+});
+
+export const resetMaze = () => ({
+  type: RESET_MAZE,
 });

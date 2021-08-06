@@ -5,6 +5,7 @@ import {
   GET_MAZE_REQUEST,
   GET_MAZE_SUCCESS,
   GET_MAZE_FAILURE,
+  RESET_MAZE,
 } from "./maze.types";
 
 const INITIAL_STATE = {
@@ -52,6 +53,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         mazeContent: null,
         error: action.data,
       };
+    case RESET_MAZE:
+      return INITIAL_STATE;
     default:
       return state;
   }

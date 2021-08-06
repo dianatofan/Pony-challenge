@@ -6,13 +6,13 @@ import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
 import { createMaze, getMaze, makeNextMove } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
-import { createMazeSuccess } from "./redux/Maze/maze.actions";
+import { resetMaze } from "./redux/Maze/maze.actions";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
-  const { mazeId, maze, createMazeSuccess } = props;
+  const { mazeId, maze, resetMaze } = props;
 
   useEffect(() => {
     return mazeId && getMaze(mazeId);
@@ -72,7 +72,7 @@ const App = (props) => {
             className="app__buttons--play"
             onClick={
               mazeId
-                ? () => createMazeSuccess(null)
+                ? () => resetMaze()
                 : () => createMaze({ width, height, difficulty })
             }
           >
@@ -108,7 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMazeSuccess: (val) => dispatch(createMazeSuccess(val)),
+    resetMaze: () => dispatch(resetMaze()),
   };
 };
 
