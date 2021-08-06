@@ -1,18 +1,10 @@
-import { createStore, applyMiddleware } from "redux";
-import createSagaMiddleware from "redux-saga";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore } from "redux";
 
 import rootReducer from "./rootReducer";
 
-import watchCreateMazeSaga from "../sagas/sagas";
-
-const sagaMiddleware = createSagaMiddleware();
-
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-
-sagaMiddleware.run(watchCreateMazeSaga);
 
 export default store;

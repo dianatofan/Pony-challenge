@@ -5,23 +5,23 @@ import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
 import { setGameStarted } from "./redux/App/app.actions";
-import { createMaze } from "./redux/Maze/maze.actions";
-import { getMaze, makeNextMove } from "./utils/api";
+// import { getMaze } from "./redux/Maze/maze.actions";
+import { createMaze, getMaze } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
-  const { setGameStarted, isGameStarted, maze, mazeId, createMaze } = props;
+  const { setGameStarted, mazeId, maze } = props;
 
   useEffect(() => {
-    // return getMaze(mazeId);
+    return mazeId && getMaze(mazeId);
   }, [mazeId]);
 
   useKeypress("ArrowLeft", () => {
     console.log("you pressed left!");
-    makeNextMove(mazeId, "west");
+    // makeNextMove(mazeId, "west");
   });
 
   return (
@@ -61,15 +61,15 @@ const App = (props) => {
           <button
             className="app__buttons--play"
             onClick={
-              isGameStarted
+              mazeId
                 ? () => setGameStarted(false)
                 : () => createMaze({ width, height, difficulty })
             }
           >
-            {isGameStarted ? "Reset →" : "Play ↩︎"}
+            {mazeId ? "Reset →" : "Play ↩︎"}
           </button>
         </section>
-        {isGameStarted && (
+        {mazeId && (
           <p className="app__keyboard-controls">
             Use <img src={keyboard} width={30} height={30} alt="arrow keys" />{" "}
             to move the pony.
@@ -77,7 +77,7 @@ const App = (props) => {
         )}
       </aside>
       <div className="app__maze-container">
-        {isGameStarted ? (
+        {mazeId ? (
           maze && <Maze data={maze} width={width} height={height} />
         ) : (
           <p className="app__instructions">
@@ -91,17 +91,13 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    isGameStarted: state.app.isGameStarted,
-    maze: state.maze.maze,
-    mazeId: state.maze.mazeId,
+    mazeId: state.maze.id.data,
+    maze: state.maze.content.data,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    setGameStarted: (val) => dispatch(setGameStarted(val)),
-    createMaze: (val) => dispatch(createMaze.request(val)),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
