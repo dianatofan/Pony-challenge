@@ -3,7 +3,7 @@ import store from "../redux/store";
 
 export const useKeypress = (key, action) => {
   useEffect(() => {
-    if (store.getState().app.isGameStarted) {
+    if (store.getState().maze.mazeContent) {
       function onKeyup(e) {
         if (e.key === key) action();
       }

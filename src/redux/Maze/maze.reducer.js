@@ -8,18 +8,10 @@ import {
 } from "./maze.types";
 
 const INITIAL_STATE = {
-  id: {
-    isLoading: false,
-    loaded: false,
-    data: null,
-    error: null,
-  },
-  content: {
-    isLoading: false,
-    loaded: false,
-    data: null,
-    error: null,
-  },
+  mazeId: null,
+  mazeContent: null,
+  isLoading: false,
+  error: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -27,62 +19,38 @@ const reducer = (state = INITIAL_STATE, action) => {
     case CREATE_MAZE_REQUEST:
       return {
         ...state,
-        id: {
-          isLoading: true,
-          loaded: false,
-          data: null,
-          error: null,
-        },
+        isLoading: true,
       };
     case CREATE_MAZE_SUCCESS:
       return {
         ...state,
-        id: {
-          isLoading: false,
-          loaded: true,
-          data: action.data,
-          error: null,
-        },
+        isLoading: false,
+        mazeId: action.data,
       };
     case CREATE_MAZE_FAILURE:
       return {
         ...state,
-        id: {
-          isLoading: false,
-          loaded: true,
-          data: null,
-          error: action.data,
-        },
+        isLoading: false,
+        mazeId: null,
+        error: action.data,
       };
     case GET_MAZE_REQUEST:
       return {
         ...state,
-        content: {
-          isLoading: true,
-          loaded: false,
-          data: null,
-          error: null,
-        },
+        isLoading: true,
       };
     case GET_MAZE_SUCCESS:
       return {
         ...state,
-        content: {
-          isLoading: false,
-          loaded: true,
-          data: action.data,
-          error: null,
-        },
+        isLoading: false,
+        mazeContent: action.data,
       };
     case GET_MAZE_FAILURE:
       return {
         ...state,
-        content: {
-          isLoading: false,
-          loaded: true,
-          data: null,
-          error: action.data,
-        },
+        isLoading: false,
+        mazeContent: null,
+        error: action.data,
       };
     default:
       return state;

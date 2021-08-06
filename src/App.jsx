@@ -4,16 +4,15 @@ import { Slider } from "./components/Slider";
 import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
-import { setGameStarted } from "./redux/App/app.actions";
-// import { getMaze } from "./redux/Maze/maze.actions";
 import { createMaze, getMaze } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
+import { createMazeSuccess } from "./redux/Maze/maze.actions";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
-  const { setGameStarted, mazeId, maze } = props;
+  const { mazeId, maze, createMazeSuccess } = props;
 
   useEffect(() => {
     return mazeId && getMaze(mazeId);
@@ -62,7 +61,7 @@ const App = (props) => {
             className="app__buttons--play"
             onClick={
               mazeId
-                ? () => setGameStarted(false)
+                ? () => createMazeSuccess(null)
                 : () => createMaze({ width, height, difficulty })
             }
           >
@@ -91,13 +90,15 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    mazeId: state.maze.id.data,
-    maze: state.maze.content.data,
+    mazeId: state.maze.mazeId,
+    maze: state.maze.mazeContent,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    createMazeSuccess: (val) => dispatch(createMazeSuccess(val)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
