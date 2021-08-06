@@ -4,7 +4,7 @@ import { Slider } from "./components/Slider";
 import { Maze } from "./components/Maze";
 import keyboard from "./assets/keyboard.svg";
 import { connect } from "react-redux";
-import { createMaze, getMaze } from "./utils/api";
+import { createMaze, getMaze, makeNextMove } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
 import { createMazeSuccess } from "./redux/Maze/maze.actions";
 
@@ -19,8 +19,19 @@ const App = (props) => {
   }, [mazeId]);
 
   useKeypress("ArrowLeft", () => {
-    console.log("you pressed left!");
-    // makeNextMove(mazeId, "west");
+    makeNextMove(mazeId, "west");
+  });
+
+  useKeypress("ArrowRight", () => {
+    makeNextMove(mazeId, "east");
+  });
+
+  useKeypress("ArrowUp", () => {
+    makeNextMove(mazeId, "north");
+  });
+
+  useKeypress("ArrowDown", () => {
+    makeNextMove(mazeId, "south");
   });
 
   return (

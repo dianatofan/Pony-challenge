@@ -61,5 +61,7 @@ export const makeNextMove = async (mazeId, direction) => {
   });
   const content = await response.json();
   const isMoveAccepted = content["state-result"] === "Move accepted";
-  console.log(isMoveAccepted);
+  if (content.state === "active") {
+    await getMaze(mazeId);
+  }
 };
