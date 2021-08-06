@@ -42,11 +42,12 @@ body {
     &--play {
       margin-right: 10px;
     }
-    > button {
-      cursor: pointer;
-      padding: 10px;
-      width: 80px;
-    }
+  }
+
+  button {
+    cursor: pointer;
+    padding: 10px;
+    width: 80px;
   }
 
   &__keyboard-controls {
@@ -63,6 +64,29 @@ body {
 
   &__instructions {
     color: $white;
+  }
+
+  &__game-over,
+  &__game-won {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > p {
+      color: $white;
+      font-size: 1em;
+      text-transform: uppercase;
+    }
+
+    .app__buttons--retry {
+      width: 120px;
+    }
+  }
+
+  &__gif {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 40px;
   }
 }
 

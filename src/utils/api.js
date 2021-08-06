@@ -7,8 +7,9 @@ import {
   getMazeRequest,
   getMazeSuccess,
   getMazeFailure,
+  resetMaze,
 } from "../redux/Maze/maze.actions";
-import { setGameStarted } from "../redux/App/app.actions";
+import { setGameOver, setGameWon } from "../redux/App/app.actions";
 
 export const createMaze = async ({ width, height, difficulty }) => {
   try {
@@ -60,8 +61,14 @@ export const makeNextMove = async (mazeId, direction) => {
     }),
   });
   const content = await response.json();
-  const isMoveAccepted = content["state-result"] === "Move accepted";
   if (content.state === "active") {
     await getMaze(mazeId);
+  } else {
+    store.dispatch(resetMaze());
+    if (content.state === "won") {
+      store.dispatch(setGameWon());
+    } else {
+      store.dispatch(setGameOver());
+    }
   }
 };

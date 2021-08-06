@@ -1,10 +1,13 @@
-import { SET_GAME_STARTED } from "./app.types";
+import { SET_GAME_OVER, SET_GAME_WON, RESET_GAME } from "./app.types";
 
-export const setGameStarted = (isGameStarted) => {
-  return {
-    type: SET_GAME_STARTED,
-    payload: {
-      isGameStarted,
-    },
-  };
-};
+export const setGameOver = () => ({
+  type: SET_GAME_OVER,
+});
+
+export const setGameWon = () => ({
+  type: SET_GAME_WON,
+});
+
+export const resetGame = () => ({
+  type: RESET_GAME,
+});

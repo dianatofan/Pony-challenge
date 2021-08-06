@@ -7,12 +7,15 @@ import { connect } from "react-redux";
 import { createMaze, getMaze, makeNextMove } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
 import { resetMaze } from "./redux/Maze/maze.actions";
+import { resetGame, setGameOver } from "./redux/App/app.actions";
+import gameOver from "./assets/gameOver.gif";
+import gameWon from "./assets/gameWon.gif";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
-  const { mazeId, maze, resetMaze } = props;
+  const { mazeId, maze, resetMaze, resetGame, isGameWon } = props;
 
   useEffect(() => {
     return mazeId && getMaze(mazeId);
@@ -72,7 +75,10 @@ const App = (props) => {
             className="app__buttons--play"
             onClick={
               mazeId
-                ? () => resetMaze()
+                ? () => {
+                    resetMaze();
+                    resetGame();
+                  }
                 : () => createMaze({ width, height, difficulty })
             }
           >
@@ -89,10 +95,37 @@ const App = (props) => {
       <div className="app__maze-container">
         {mazeId ? (
           maze && <Maze data={maze} width={width} height={height} />
-        ) : (
+        ) : isGameWon === null ? (
           <p className="app__instructions">
             Press on 'Play' to create the maze.
           </p>
+        ) : isGameWon ? (
+          <div className="app__game-won">
+            <img
+              src={gameWon}
+              width={400}
+              className="app__gif"
+              alt="Game won"
+            />
+            <p>Congrats, you saved the pony!</p>
+            <button
+              className="app__buttons--retry"
+              onClick={() => createMaze({ width, height, difficulty })}
+            >
+              Play again
+            </button>
+          </div>
+        ) : (
+          <div className="app__game-over">
+            <img src={gameOver} className="app__gif" alt="Game over" />
+            <p>Game over</p>
+            <button
+              className="app__buttons--retry"
+              onClick={() => createMaze({ width, height, difficulty })}
+            >
+              Retry
+            </button>
+          </div>
         )}
       </div>
     </div>
@@ -103,12 +136,14 @@ const mapStateToProps = (state) => {
   return {
     mazeId: state.maze.mazeId,
     maze: state.maze.mazeContent,
+    isGameWon: state.app.isGameWon,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     resetMaze: () => dispatch(resetMaze()),
+    resetGame: () => dispatch(resetGame()),
   };
 };
 
