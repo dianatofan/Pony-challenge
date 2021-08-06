@@ -8,6 +8,9 @@ import {
   getMazeSuccess,
   getMazeFailure,
   resetMaze,
+  makeMoveFailure,
+  makeMoveRequest,
+  makeMoveSuccess,
 } from "../redux/Maze/maze.actions";
 import { setGameOver, setGameWon } from "../redux/App/app.actions";
 
@@ -50,25 +53,32 @@ export const getMaze = async (mazeId) => {
 };
 
 export const makeNextMove = async (mazeId, direction) => {
-  const response = await fetch(`${BASE_URL}/${mazeId}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      direction,
-    }),
-  });
-  const content = await response.json();
-  if (content.state === "active") {
-    await getMaze(mazeId);
-  } else {
-    store.dispatch(resetMaze());
-    if (content.state === "won") {
-      store.dispatch(setGameWon());
+  try {
+    store.dispatch(makeMoveRequest(direction));
+    const response = await fetch(`${BASE_URL}/${mazeId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        direction,
+      }),
+    });
+    const content = await response.json();
+    if (content.state === "active") {
+      await getMaze(mazeId);
+      store.dispatch(makeMoveSuccess(direction));
     } else {
-      store.dispatch(setGameOver());
+      store.dispatch(resetMaze());
+      if (content.state === "won") {
+        store.dispatch(setGameWon());
+      } else {
+        store.dispatch(setGameOver());
+      }
     }
+  } catch (e) {
+    store.dispatch(makeMoveFailure(e));
+    return new Error(e);
   }
 };

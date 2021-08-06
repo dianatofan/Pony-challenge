@@ -6,6 +6,9 @@ import {
   GET_MAZE_SUCCESS,
   GET_MAZE_FAILURE,
   RESET_MAZE,
+  MAKE_MOVE_REQUEST,
+  MAKE_MOVE_SUCCESS,
+  MAKE_MOVE_FAILURE,
 } from "./maze.types";
 
 export const createMazeRequest = (data) => ({
@@ -35,6 +38,21 @@ export const getMazeSuccess = (data) => ({
 
 export const getMazeFailure = (data) => ({
   type: GET_MAZE_FAILURE,
+  data,
+});
+
+export const makeMoveRequest = (data) => ({
+  type: MAKE_MOVE_REQUEST,
+  data,
+});
+
+export const makeMoveSuccess = (data) => ({
+  type: MAKE_MOVE_SUCCESS,
+  data,
+});
+
+export const makeMoveFailure = (data) => ({
+  type: MAKE_MOVE_FAILURE,
   data,
 });
 

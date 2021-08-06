@@ -6,6 +6,9 @@ import {
   GET_MAZE_SUCCESS,
   GET_MAZE_FAILURE,
   RESET_MAZE,
+  MAKE_MOVE_REQUEST,
+  MAKE_MOVE_SUCCESS,
+  MAKE_MOVE_FAILURE,
 } from "./maze.types";
 
 const INITIAL_STATE = {
@@ -51,6 +54,22 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         mazeContent: null,
+        error: action.data,
+      };
+    case MAKE_MOVE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case MAKE_MOVE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case MAKE_MOVE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
         error: action.data,
       };
     case RESET_MAZE:

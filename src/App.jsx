@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { createMaze, getMaze, makeNextMove } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
 import { resetMaze } from "./redux/Maze/maze.actions";
-import { resetGame, setGameOver } from "./redux/App/app.actions";
+import { resetGame } from "./redux/App/app.actions";
 import gameOver from "./assets/gameOver.gif";
 import gameWon from "./assets/gameWon.gif";
 
