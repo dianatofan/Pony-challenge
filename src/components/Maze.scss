@@ -19,14 +19,14 @@
     }
 
     @media only screen and (max-width: 1000px) {
-      width: calc(1em + 2vw);
-      height: calc(1em + 2vw);
+      width: calc(1em + 1vw);
+      height: calc(1em + 1vw);
       &.west {
-        width: calc(1em + 2vw - 4px);
+        width: calc(1em + 1vw - 4px);
       }
 
       &.north {
-        height: calc(1em + 2vw - 4px);
+        height: calc(1em + 1vw - 4px);
       }
     }
 
