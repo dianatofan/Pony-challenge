@@ -36,10 +36,14 @@ const createRows = (maze) => {
   return rows;
 };
 
-const Cell = ({ cell }) => {
+const Cell = ({ cell, width }) => {
   const { walls, isPony, isDomokun, isExit } = cell;
+
   return (
-    <div className={`cell ${walls.join(" ")}`}>
+    <div
+      className={`cell ${walls.join(" ")}`}
+      style={{ width: `${70 / width}vmin`, height: `${70 / width}vmin` }}
+    >
       {isPony && <span className="pony" />}
       {isDomokun && <span className="domokun" />}
       {isExit && <span className="door" />}
@@ -47,7 +51,8 @@ const Cell = ({ cell }) => {
   );
 };
 
-const Row = ({ row }) => row.map((cell, i) => <Cell key={i} cell={cell} />);
+const Row = ({ row, width }) =>
+  row.map((cell, i) => <Cell key={i} cell={cell} width={width} />);
 
 export const Maze = ({ data }) => {
   const rows = createRows(data);
@@ -56,7 +61,7 @@ export const Maze = ({ data }) => {
     <div className="maze" onKeyPress={(ev) => console.log(ev)}>
       {rows.map((row, i) => (
         <div className="row" key={i}>
-          <Row key={i} row={row} />
+          <Row key={i} row={row} width={data.size[0]} />
         </div>
       ))}
     </div>
