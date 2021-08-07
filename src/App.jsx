@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.scss";
 import { Slider } from "./components/Slider";
 import { Maze } from "./components/Maze";
-import keyboard from "./assets/keyboard.svg";
+import { icons } from "./utils/icons";
 import { connect } from "react-redux";
 import { createMaze, getMaze, makeNextMove } from "./utils/api";
 import { useKeypress } from "./hooks/useKeypress";
@@ -107,22 +107,54 @@ const App = (props) => {
           <label htmlFor="autoplay">Autoplay</label>
         </form>
         {mazeId && (
-          <p className="app__keyboard-controls">
-            Use{" "}
-            <img
-              src={keyboard}
-              className="app__keyboard-controls-icon"
-              width={30}
-              height={30}
-              alt="arrow keys"
-            />{" "}
-            to move the pony.
-          </p>
+          <section className="app__controls">
+            <p className="app__keyboard-controls">
+              Use{" "}
+              <img
+                src={icons.keyboard}
+                className="app__keyboard-controls-icon"
+                width={30}
+                height={30}
+                alt="arrow keys"
+              />{" "}
+              to move the pony.
+            </p>
+          </section>
         )}
       </aside>
       <div className="app__maze-container">
         {mazeId ? (
-          maze && <Maze data={maze} width={width} height={height} />
+          maze && (
+            <div>
+              <Maze data={maze} width={width} height={height} />
+              <p className="app__mouse-controls">
+                <img
+                  src={icons.up}
+                  onClick={() => makeNextMove(mazeId, "north")}
+                  className="app__mouse-controls-up"
+                  alt="arrow keys"
+                />{" "}
+                <img
+                  src={icons.down}
+                  onClick={() => makeNextMove(mazeId, "south")}
+                  className="app__mouse-controls-down"
+                  alt="arrow keys"
+                />{" "}
+                <img
+                  src={icons.left}
+                  onClick={() => makeNextMove(mazeId, "west")}
+                  className="app__mouse-controls-left"
+                  alt="arrow keys"
+                />{" "}
+                <img
+                  src={icons.right}
+                  onClick={() => makeNextMove(mazeId, "east")}
+                  className="app__mouse-controls-right"
+                  alt="arrow keys"
+                />{" "}
+              </p>
+            </div>
+          )
         ) : isGameWon === null ? (
           <p className="app__instructions">
             Press on 'Play' to create the maze.

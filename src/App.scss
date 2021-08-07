@@ -29,29 +29,34 @@ body {
   &__title {
     color: $pink;
     font-weight: 900;
+    grid-area: title;
   }
 
   &__parameters {
     display: flex;
     flex-direction: column;
+    grid-area: parameters;
   }
 
   &__buttons {
     margin: 20px 0;
+    grid-area: buttons;
     &--play {
       margin-right: 10px;
+      width: 100%;
     }
-    &--play, &--pause {
+    &--play,
+    &--retry {
       background: $lightPurple;
       color: $white;
       border: none;
       cursor: pointer;
       padding: 10px;
-      width: 100%;
     }
   }
 
   &__mode {
+    grid-area: mode;
     > label {
       margin-right: 8px;
     }
@@ -62,6 +67,38 @@ body {
     align-items: flex-end;
     &-icon {
       margin: 0 8px;
+    }
+  }
+
+  &__mouse-controls {
+    position: absolute;
+    right: 30px;
+    bottom: 10px;
+    display: grid;
+    grid-template-areas:
+      ". up ."
+      "left . right"
+      ". down .";
+    &-up,
+    &-down,
+    &-left,
+    &-right {
+      width: 2em;
+      height: 2em;
+      margin: 2px;
+      cursor: pointer;
+    }
+    &-up {
+      grid-area: up;
+    }
+    &-down {
+      grid-area: down;
+    }
+    &-left {
+      grid-area: left;
+    }
+    &-right {
+      grid-area: right;
     }
   }
 
@@ -97,21 +134,31 @@ body {
     height: auto;
     margin-bottom: 40px;
   }
-}
 
-@media only screen and (max-width: 1280px) {
-  .app {
+  @media only screen and (max-width: 1280px) {
     flex-wrap: wrap-reverse;
     &__sidebar,
     &__maze-container {
+      position: relative;
       width: 100%;
     }
     &__sidebar {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      height: 15%;
+      display: grid;
+      grid-template-areas:
+        "parameters title"
+        "parameters mode"
+        "parameters buttons";
+    }
+    &__title {
+      margin-top: 0;
+      text-align: center;
+    }
+    &__mode {
+      text-align: center;
     }
     &__buttons {
+      width: 60%;
       justify-self: center;
     }
     &__description,
@@ -119,7 +166,23 @@ body {
       display: none;
     }
     &__maze-container {
-      height: 70%;
+      height: 85%;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    &__title {
+      display: none;
+    }
+
+    &__sidebar {
+      padding: 1rem;
+      grid-template-areas:
+      "parameters"
+      "mode"
+      "buttons";
+      justify-content: center;
+      height: auto;
     }
   }
 }
