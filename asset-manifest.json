@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/Pony-challenge/static/css/main.5f660ea4.chunk.css",
+    "main.js": "/Pony-challenge/static/js/main.9aa90ae4.chunk.js",
+    "main.js.map": "/Pony-challenge/static/js/main.9aa90ae4.chunk.js.map",
+    "runtime-main.js": "/Pony-challenge/static/js/runtime-main.cf0d7f99.js",
+    "runtime-main.js.map": "/Pony-challenge/static/js/runtime-main.cf0d7f99.js.map",
+    "static/js/2.43587880.chunk.js": "/Pony-challenge/static/js/2.43587880.chunk.js",
+    "static/js/2.43587880.chunk.js.map": "/Pony-challenge/static/js/2.43587880.chunk.js.map",
+    "index.html": "/Pony-challenge/index.html",
+    "static/css/main.5f660ea4.chunk.css.map": "/Pony-challenge/static/css/main.5f660ea4.chunk.css.map",
+    "static/js/2.43587880.chunk.js.LICENSE.txt": "/Pony-challenge/static/js/2.43587880.chunk.js.LICENSE.txt",
+    "static/media/Maze.scss": "/Pony-challenge/static/media/pony.5c6ee56d.png",
+    "static/media/down.18785dbf.svg": "/Pony-challenge/static/media/down.18785dbf.svg",
+    "static/media/gameOver.d8daa31f.gif": "/Pony-challenge/static/media/gameOver.d8daa31f.gif",
+    "static/media/gameWon.a4cc3037.gif": "/Pony-challenge/static/media/gameWon.a4cc3037.gif",
+    "static/media/keyboard.0b2ea240.svg": "/Pony-challenge/static/media/keyboard.0b2ea240.svg",
+    "static/media/left.c9706021.svg": "/Pony-challenge/static/media/left.c9706021.svg",
+    "static/media/right.e24ccab8.svg": "/Pony-challenge/static/media/right.e24ccab8.svg",
+    "static/media/up.5854c251.svg": "/Pony-challenge/static/media/up.5854c251.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cf0d7f99.js",
+    "static/js/2.43587880.chunk.js",
+    "static/css/main.5f660ea4.chunk.css",
+    "static/js/main.9aa90ae4.chunk.js"
+  ]
+}
