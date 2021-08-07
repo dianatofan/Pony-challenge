@@ -18,7 +18,7 @@ body {
     color: white;
     width: 20%;
     background: $mediumPurple;
-    padding: 1em;
+    padding: 2rem;
   }
 
   &__maze-container {
@@ -34,7 +34,6 @@ body {
   &__parameters {
     display: flex;
     flex-direction: column;
-    gap: 20px;
   }
 
   &__buttons {
@@ -42,18 +41,28 @@ body {
     &--play {
       margin-right: 10px;
     }
+    &--play, &--pause {
+      background: $lightPurple;
+      color: $white;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      width: 100%;
+    }
   }
 
-  button {
-    cursor: pointer;
-    padding: 10px;
-    width: 80px;
+  &__mode {
+    > label {
+      margin-right: 8px;
+    }
   }
 
   &__keyboard-controls {
     display: flex;
     align-items: flex-end;
-    gap: 8px;
+    &-icon {
+      margin: 0 8px;
+    }
   }
 
   &__maze-container {

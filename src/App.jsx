@@ -15,6 +15,7 @@ const App = (props) => {
   const [width, setWidth] = useState(15);
   const [height, setHeight] = useState(15);
   const [difficulty, setDifficulty] = useState(5);
+  const [gameMode, setGameMode] = useState("manual-play");
   const { mazeId, maze, resetMaze, resetGame, isGameWon } = props;
 
   useEffect(() => {
@@ -85,9 +86,36 @@ const App = (props) => {
             {mazeId ? "Reset →" : "Play ↩︎"}
           </button>
         </section>
+        <form className="app__mode">
+          <input
+            type="radio"
+            value="manual-play"
+            checked={gameMode === "manual-play"}
+            id="manual-play"
+            onChange={(e) => !mazeId && setGameMode(e.target.value)}
+            name="manual-play"
+          />
+          <label htmlFor="manual-play">Manual play</label>
+          <input
+            type="radio"
+            value="autoplay"
+            checked={gameMode === "autoplay"}
+            id="autoplay"
+            onChange={(e) => !mazeId && setGameMode(e.target.value)}
+            name="autoplay"
+          />
+          <label htmlFor="autoplay">Autoplay</label>
+        </form>
         {mazeId && (
           <p className="app__keyboard-controls">
-            Use <img src={keyboard} width={30} height={30} alt="arrow keys" />{" "}
+            Use{" "}
+            <img
+              src={keyboard}
+              className="app__keyboard-controls-icon"
+              width={30}
+              height={30}
+              alt="arrow keys"
+            />{" "}
             to move the pony.
           </p>
         )}
