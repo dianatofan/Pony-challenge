@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Save the Pony
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created using [Create React App](https://github.com/facebook/create-react-app) as a solution to Trustpilot's [coding challenge](https://ponychallenge.trustpilot.com/index.html).
+
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Run the app in the development mode.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `npm test`
+Run unit tests.
 
-### `yarn test`
+### `npm build`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Build the app for production.
 
-### `yarn build`
+### `npm deploy`
+Build the app for production and deploys it to Github pages.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## App overview
+The web app is published at the following URL: https://dianatofan.github.io/Pony-challenge and was built using React, Redux and Sass.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app is responsive and can be used irregardless of the screen size (desktop, tablet or mobile).
+It can be run in all modern browsers supporting grid.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The app consists of:
+* navigation bar - here the user can adjust the maze parameters (width, height and game difficulty) and can also select whether he wants to play the game in manual mode or set it to autoplay
+* maze container - the 'playground' of the app, where the maze will be generated
 
-### `yarn eject`
+The user can move the pony in 2 ways:
+* by using the keyboard (left/right/top/down arrows)
+* by clicking on the arrow icons placed on the bottom right side of the maze (feature designed having smaller devices in mind)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![Screenshot of the app](/public/appScreenshot.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+When the pony reaches the exit door, the game is won, and when the pony gets caught by the domokun, the game is lost.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Architecture
+Every time the pony moves to the next location, the API is called twice:
+* one time for identifying whether the move is valid and there are no walls to block the pony from passing there
+* one time to update the locations of the pony and domokun, if the pony's move is valid
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+When performing the API requests, there are 3 actions dispatched in Redux for better error handling:
+* `API_CALL_REQUEST` - dispatched before calling the actual API
+* `API_CALL_SUCCESS` - dispatched after the API call was performed and a valid response was returned
+* `API_CALL_FAILURE` - dispatched when an error occurred while executing the API call
 
-## Learn More
+All the API calls are found in `utils/api.js`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Autoplay mode
+When selecting 'Autoplay' mode, an exit path between the pony and the door will be created (using DFS), and the pony will follow it.
+In case the pony encounters the domokun on its way out, the path will be changed accordingly in order to escape from the domokun.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Future improvements
+There is always room of improvement. Some possible future improvements include:
+* more realistic animations when moving the pony and domokun (using sprite sheets)
+* tap functionality for touchscreen devices
+* find shortest path in the maze using Dijkstra's algorithm
