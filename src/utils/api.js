@@ -14,9 +14,10 @@ import {
 } from "../redux/Maze/maze.actions";
 import { setGameOver, setGameWon } from "../redux/App/app.actions";
 
+// Called when clicking on the 'Play' button to generate the mazeId, given the maze parameters
 export const createMaze = async ({ width, height, difficulty }) => {
   try {
-    store.dispatch(createMazeRequest());
+    store.dispatch(createMazeRequest()); // notify Redux an API request has been made
     const response = await fetch(`${BASE_URL}`, {
       method: "POST",
       headers: {
@@ -31,30 +32,32 @@ export const createMaze = async ({ width, height, difficulty }) => {
       }),
     });
     const content = await response.json();
-    store.dispatch(createMazeSuccess(content.maze_id));
+    store.dispatch(createMazeSuccess(content.maze_id)); // save the mazeId in the store
   } catch (e) {
-    store.dispatch(createMazeFailure(e));
+    store.dispatch(createMazeFailure(e)); // save the error in the store
     return new Error(e);
   }
 };
 
+// Update maze with the pony and domokun's locations
 export const getMaze = async (mazeId) => {
   try {
     store.dispatch(getMazeRequest());
     await fetch(`${BASE_URL}/${mazeId}`)
       .then((response) => response.json())
       .then((json) => {
-        store.dispatch(getMazeSuccess(json));
+        store.dispatch(getMazeSuccess(json)); // save the maze content in the store
       });
   } catch (e) {
-    store.dispatch(getMazeFailure(e));
+    store.dispatch(getMazeFailure(e)); // save the error in the store
     return new Error(e);
   }
 };
 
+// Move pony to the specified direction
 export const makeNextMove = async (mazeId, direction) => {
   try {
-    store.dispatch(makeMoveRequest(direction));
+    store.dispatch(makeMoveRequest());
     const response = await fetch(`${BASE_URL}/${mazeId}`, {
       method: "POST",
       headers: {
@@ -67,10 +70,12 @@ export const makeNextMove = async (mazeId, direction) => {
     });
     const content = await response.json();
     if (content.state === "active") {
-      await getMaze(mazeId);
-      store.dispatch(makeMoveSuccess(direction));
+      // game is active
+      // if move is valid (no obstructing walls)
+      await getMaze(mazeId); // update maze with the new locations
+      store.dispatch(makeMoveSuccess());
     } else {
-      store.dispatch(resetMaze());
+      store.dispatch(resetMaze()); // reset maze as the game ended
       if (content.state === "won") {
         store.dispatch(setGameWon());
       } else {

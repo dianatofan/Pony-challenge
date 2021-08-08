@@ -41,14 +41,12 @@ export const getMazeFailure = (data) => ({
   data,
 });
 
-export const makeMoveRequest = (data) => ({
+export const makeMoveRequest = () => ({
   type: MAKE_MOVE_REQUEST,
-  data,
 });
 
-export const makeMoveSuccess = (data) => ({
+export const makeMoveSuccess = () => ({
   type: MAKE_MOVE_SUCCESS,
-  data,
 });
 
 export const makeMoveFailure = (data) => ({

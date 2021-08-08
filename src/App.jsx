@@ -19,26 +19,32 @@ const App = (props) => {
   const [gameMode, setGameMode] = useState("manual-play");
   const { mazeId, maze, resetMaze, resetGame, isGameWon } = props;
 
+  // Render maze when a maze id has been generated
   useEffect(() => {
     return mazeId && getMaze(mazeId);
   }, [mazeId]);
 
+  const makeMove = (direction) =>
+    gameMode === "manual-play" && makeNextMove(mazeId, direction);
+
+  // Keyboard event listeners
   useKeypress("ArrowLeft", () => {
-    makeNextMove(mazeId, "west");
+    makeMove("west");
   });
 
   useKeypress("ArrowRight", () => {
-    makeNextMove(mazeId, "east");
+    makeMove("east");
   });
 
   useKeypress("ArrowUp", () => {
-    makeNextMove(mazeId, "north");
+    makeMove("north");
   });
 
   useKeypress("ArrowDown", () => {
-    makeNextMove(mazeId, "south");
+    makeMove("south");
   });
 
+  // Autoplay mode
   useEffect(() => {
     if (gameMode === "autoplay" && maze) {
       buildExitPath(maze);

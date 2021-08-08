@@ -53,13 +53,13 @@ const dfsExitPath = (start, move, path, exit, directions) => {
 const getPossibleMoveLocations = (pony) => {
   let directions = new Set(DIRECTIONS);
   const walls = maze.data;
-  const ponyCoordinates = toPoint(pony);
+  const ponyCoordinates = indexToCoordinates(pony);
 
-  if (ponyCoordinates.x === 0) {
+  if (ponyCoordinates[0] === 0) {
     directions.delete("north");
   }
 
-  if (ponyCoordinates.y === 0) {
+  if (ponyCoordinates[1] === 0) {
     directions.delete("west");
   }
 
@@ -111,10 +111,9 @@ const getNextPosition = (index, move) => {
   }
 };
 
-// Convert location index to point with coordinates (x, y)
 const toPoint = (location) => ({
-  x: location % maze.size[0],
-  y: Math.floor(location / maze.size[0]),
+  x: location % this.width,
+  y: Math.floor(location / this.width),
 });
 
 const indexToCoordinates = (index) => [
