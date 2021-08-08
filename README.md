@@ -39,6 +39,8 @@ The user can move the pony in 2 ways:
 
 When the pony reaches the exit door, the game is won, and when the pony gets caught by the domokun, the game is lost.
 
+Note! While the game is running, the user is unable to switch between the game modes (manual / autoplay). The buttons are active only before creating a maze.
+
 ## Architecture
 Every time the pony moves to the next location, the API is called twice:
 * one time for identifying whether the move is valid and there are no walls to block the pony from passing there
