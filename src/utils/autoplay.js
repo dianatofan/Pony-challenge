@@ -1,17 +1,15 @@
 import { makeNextMove } from "./api";
 
-let exitPath = [],
-  directionsArr = [],
-  maze;
-
-const OPPOSITE = {
+const DIRECTIONS = {
   south: "north",
   north: "south",
   east: "west",
   west: "east",
 };
 
-const DIRECTIONS = ["north", "south", "west", "east"];
+let exitPath = [],
+  directionsArr = [],
+  maze;
 
 export const buildExitPath = (mazeDirections) => {
   maze = mazeDirections;
@@ -28,18 +26,18 @@ const dfsExitPath = (start, move, path, exit, directions) => {
     directionsArr = directions;
     movePony();
   }
-  // explore the possible paths
   for (let i in reachablePoints) {
-    if (!move || reachablePoints[i] !== OPPOSITE[move]) {
-      const newPosition = getNextPosition(start, reachablePoints[i]);
-      if (!path.includes(newPosition)) {
-        //if we're not going backwards, then add the new position to the path and proceed
+    // check the possible move directions
+    if (!move || reachablePoints[i] !== DIRECTIONS[move]) {
+      const nextPosition = getNextPosition(start, reachablePoints[i]);
+      if (!path.includes(nextPosition)) {
+        // add the position to the path
         const newPath = [...path];
         const newDirections = [...directions];
-        newPath.push(newPosition);
+        newPath.push(nextPosition);
         newDirections.push(reachablePoints[i]);
         dfsExitPath(
-          newPosition,
+          nextPosition,
           reachablePoints[i],
           newPath,
           exit,
@@ -51,108 +49,88 @@ const dfsExitPath = (start, move, path, exit, directions) => {
 };
 
 const getPossibleMoveLocations = (pony) => {
-  let directions = new Set(DIRECTIONS);
+  const directions = new Set(Object.keys(DIRECTIONS));
   const walls = maze.data;
-  const ponyCoordinates = indexToCoordinates(pony);
-
+  const ponyCoordinates = convertToPoint(pony);
   if (ponyCoordinates[0] === 0) {
     directions.delete("north");
   }
-
   if (ponyCoordinates[1] === 0) {
     directions.delete("west");
   }
-
-  for (let i in walls[pony]) {
-    directions.delete(walls[pony][i]);
+  for (let index in walls[pony]) {
+    directions.delete(walls[pony][index]);
   }
-  if (isSouthWall(ponyCoordinates, maze)) {
+  if (isSouthWall(ponyCoordinates)) {
     directions.delete("south");
   }
-
-  if (isEastWall(ponyCoordinates, maze)) {
+  if (isEastWall(ponyCoordinates)) {
     directions.delete("east");
   }
-
   return Array.from(directions);
 };
 
-const movePony = (direction = "") => {
-  // if no direction is specified i.e auto play mode then take the first direction from the calculated exit path
-  if (direction === "") {
-    direction = directionsArr[0];
-
-    // check if the monster isn't far away
-    if (isDomokunAhead(maze)) {
-      // The monster is like the T-Rex, it won't see you if you don't move, so wait for the path to be cleared and run!
-      const available = getPossibleMoveLocations(maze.pony[0]);
-      direction = DIRECTIONS.filter((d) => !available.includes(d))[0];
-    }
+const movePony = () => {
+  let direction = directionsArr[0];
+  if (isDomokunClose()) {
+    const possibleMoveLocations = getPossibleMoveLocations(maze.pony[0]);
+    direction = Object.keys(DIRECTIONS).filter(
+      (direction) => !possibleMoveLocations.includes(direction)
+    )[0];
   }
-  // API call to make the chosen move
   makeNextMove(maze["maze_id"], direction);
 };
 
-const getNextPosition = (index, move) => {
-  const coord = indexToCoordinates(index);
-
-  switch (move) {
+const getNextPosition = (location, direction) => {
+  const point = convertToPoint(location);
+  switch (direction) {
     case "north":
-      return coordinatesToIndex([coord[0] - 1, coord[1]]);
+      return convertToLocation([point[0] - 1, point[1]]);
     case "south":
-      return coordinatesToIndex([coord[0] + 1, coord[1]]);
-    case "east":
-      return coordinatesToIndex([coord[0], coord[1] + 1]);
+      return convertToLocation([point[0] + 1, point[1]]);
     case "west":
-      return coordinatesToIndex([coord[0], coord[1] - 1]);
-
+      return convertToLocation([point[0], point[1] - 1]);
+    case "east":
+      return convertToLocation([point[0], point[1] + 1]);
     default:
-      return coord;
+      return point;
   }
 };
 
-const toPoint = (location) => ({
-  x: location % this.width,
-  y: Math.floor(location / this.width),
-});
-
-const indexToCoordinates = (index) => [
-  Math.floor(index / maze.size[0]),
-  index % maze.size[0],
+const convertToPoint = (location) => [
+  Math.floor(location / maze.size[0]),
+  location % maze.size[0],
 ];
 
-const coordinatesToIndex = (coord) => {
-  return coord[0] * maze.size[0] + coord[1];
-};
+const convertToLocation = (point) => point[0] * maze.size[0] + point[1];
 
-const isSouthWall = (coords) => {
-  if (coords[0] === maze.size[1] - 1) {
+const isSouthWall = (point) => {
+  if (point[0] === maze.size[1] - 1) {
     return true;
   }
-  const index = coordinatesToIndex([coords[0] + 1, coords[1]]);
-  return !!maze.data[index].includes("north");
+  const location = convertToLocation([point[0] + 1, point[1]]);
+  return !!maze.data[location].includes("north");
 };
 
-const isEastWall = (coords) => {
-  if (coords[1] === maze.size[0] - 1) {
+const isEastWall = (point) => {
+  if (point[1] === maze.size[0] - 1) {
     return true;
   }
-  const index = coordinatesToIndex([coords[0], coords[1] + 1]);
-  return !!maze.data[index].includes("west");
+  const location = convertToLocation([point[0], point[1] + 1]);
+  return !!maze.data[location].includes("west");
 };
 
-const isDomokunAhead = (maze) => {
+const isDomokunClose = () => {
   const domokun = maze.domokun[0];
   const distance = exitPath.indexOf(domokun);
   if (distance > -1 && distance < 3) {
     return true;
   }
-
-  const coord = indexToCoordinates(exitPath[1]);
-  const indexes = [];
-  indexes.push(coordinatesToIndex([coord[0] - 1, coord[1]]));
-  indexes.push(coordinatesToIndex([coord[0] + 1, coord[1]]));
-  indexes.push(coordinatesToIndex([coord[0], coord[1] - 1]));
-  indexes.push(coordinatesToIndex([coord[0], coord[1] + 1]));
-  return indexes.includes(domokun);
+  const exitPoint = convertToPoint(exitPath[1]);
+  const locations = [];
+  locations.push(convertToLocation([exitPoint[0] - 1, exitPoint[1]]));
+  locations.push(convertToLocation([exitPoint[0] + 1, exitPoint[1]]));
+  locations.push(convertToLocation([exitPoint[0], exitPoint[1] - 1]));
+  locations.push(convertToLocation([exitPoint[0], exitPoint[1] + 1]));
+  return locations.includes(domokun);
 };

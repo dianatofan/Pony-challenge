@@ -92,6 +92,7 @@ const App = (props) => {
                 ? () => {
                     resetMaze();
                     resetGame();
+                    setGameMode("manual-play");
                   }
                 : () => createMaze({ width, height, difficulty })
             }
@@ -143,25 +144,25 @@ const App = (props) => {
               <p className="app__mouse-controls">
                 <img
                   src={icons.up}
-                  onClick={() => makeNextMove(mazeId, "north")}
+                  onClick={() => makeMove("north")}
                   className="app__mouse-controls-up"
                   alt="arrow keys"
                 />{" "}
                 <img
                   src={icons.down}
-                  onClick={() => makeNextMove(mazeId, "south")}
+                  onClick={() => makeMove("south")}
                   className="app__mouse-controls-down"
                   alt="arrow keys"
                 />{" "}
                 <img
                   src={icons.left}
-                  onClick={() => makeNextMove(mazeId, "west")}
+                  onClick={() => makeMove("west")}
                   className="app__mouse-controls-left"
                   alt="arrow keys"
                 />{" "}
                 <img
                   src={icons.right}
-                  onClick={() => makeNextMove(mazeId, "east")}
+                  onClick={() => makeMove("east")}
                   className="app__mouse-controls-right"
                   alt="arrow keys"
                 />{" "}
