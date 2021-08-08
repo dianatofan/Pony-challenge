@@ -15,13 +15,6 @@ const createRows = (maze) => {
         isDomokun: id === maze.domokun[0],
         isExit: id === maze["end-point"][0],
       };
-      // element["key"] = id;
-      // element["walls"] = data[id];
-      // element["isPony"] = id === pony;
-      // element["isDomokun"] = id === domokun;
-      // element["isExit"] = id === dataArr["end-point"];
-      // element["isExitPath"] = exitPath.includes(id);
-      // element["height"] = height;
       if (i === height - 1) {
         cell["walls"].push("south");
       }

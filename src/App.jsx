@@ -10,6 +10,7 @@ import { resetMaze } from "./redux/Maze/maze.actions";
 import { resetGame } from "./redux/App/app.actions";
 import gameOver from "./assets/gameOver.gif";
 import gameWon from "./assets/gameWon.gif";
+import { buildExitPath } from "./utils/autoplay";
 
 const App = (props) => {
   const [width, setWidth] = useState(15);
@@ -37,6 +38,12 @@ const App = (props) => {
   useKeypress("ArrowDown", () => {
     makeNextMove(mazeId, "south");
   });
+
+  useEffect(() => {
+    if (gameMode === "autoplay" && maze) {
+      buildExitPath(maze);
+    }
+  }, [gameMode, maze]);
 
   return (
     <div className="app">
