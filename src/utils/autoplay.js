@@ -20,18 +20,18 @@ export const buildExitPath = (mazeDirections) => {
 
 const dfsExitPath = (start, move, path, exit, directions) => {
   const reachablePoints = getPossibleMoveLocations(start);
-  // exit found
+  // Exit found
   if (start === exit) {
     exitPath = path;
     directionsArr = directions;
     movePony();
   }
   for (let i in reachablePoints) {
-    // check the possible move directions
+    // Check the possible move directions
     if (!move || reachablePoints[i] !== DIRECTIONS[move]) {
       const nextPosition = getNextPosition(start, reachablePoints[i]);
       if (!path.includes(nextPosition)) {
-        // add the position to the path
+        // Add the position to the path
         const newPath = [...path];
         const newDirections = [...directions];
         newPath.push(nextPosition);

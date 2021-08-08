@@ -3,13 +3,16 @@
 This project was created using [Create React App](https://github.com/facebook/create-react-app) as a solution to Trustpilot's [coding challenge](https://ponychallenge.trustpilot.com/index.html).
 
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+After cloning the repository, the following scripts are available:
 
 ### `npm start`
 
 Run the app in the development mode.
+
+Open http://localhost:3000 to view it in the browser.
+
 
 ### `npm test`
 Run unit tests.
@@ -20,6 +23,14 @@ Build the app for production.
 
 ### `npm deploy`
 Build the app for production and deploys it to Github pages.
+
+## Technologies used
+* React - building the UI
+* Redux - state management
+* Sass - extend CSS capabilities
+* Prettier - code formatter
+* Eslint - code quality check
+* Github pages - app deployment
 
 ## App overview
 The web app is published at the following URL: https://dianatofan.github.io/Pony-challenge and was built using React, Redux and Sass.
@@ -62,3 +73,4 @@ There is always room of improvement. Some possible future improvements include:
 * more realistic animations when moving the pony and domokun (using sprite sheets)
 * tap functionality for touchscreen devices
 * find shortest path in the maze using Dijkstra's algorithm
+* unit tests
