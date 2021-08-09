@@ -18,7 +18,7 @@ Open http://localhost:3000 to view it in the browser.
 Build the app for production.
 
 ### `npm deploy`
-Build the app for production and deploys it to Github pages.
+Build the app for production and deploy it to Github pages.
 
 ## Technologies used
 * React - building the UI
